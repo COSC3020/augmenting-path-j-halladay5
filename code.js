@@ -1,4 +1,4 @@
-function augmentingPath(graph, start, end, path = [])
+function augmentingPath(graph, start, end, path = [], visited = [])
 {
     path.push(start);
     
@@ -7,17 +7,19 @@ function augmentingPath(graph, start, end, path = [])
         return path;
     }
     
+    visited.push(start);
+    
     for(var key in graph[start])
     {
-        if(!path.includes(key))
+        if(!path.includes(key) || !visited.includes(key))
         {
             if(key == end)
             {
                 path.push(key);
                 return path;
             }
-            
-            var newPath = augmentingPath(graph, key, end, path);
+            visited.push(key);
+            var newPath = augmentingPath(graph, key, end, path, visited);
             
             if(newPath.length > 0)
             {
@@ -30,3 +32,4 @@ function augmentingPath(graph, start, end, path = [])
     }
     return [];
 }
+
